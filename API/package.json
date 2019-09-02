@@ -1,0 +1,18 @@
+{
+  "name": "bitcoinprice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "btc-stats": "0.0.2",
+    "cheerio": "^1.0.0-rc.3",
+    "curl-request": "1.1.1",
+    "express": "^4.17.1"
+  }
+}
