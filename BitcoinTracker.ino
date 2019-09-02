@@ -6,6 +6,7 @@
 #include <SPI.h>
 #include "FastLED.h"
 #include <LedControl.h>
+#include <ArduinoJson.h>
 
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
 #define NUM_PANELS 4
@@ -27,46 +28,127 @@ const char* password = "Aras1234";
 double curr_price = -1.0;
 unsigned long bufferLong[14] = {0};
 unsigned char connectText[] PROGMEM ={"Connecting..."};
-unsigned char emptySpace[] PROGMEM = {"      å "};
+unsigned char emptySpace[] PROGMEM = {"      "};
 unsigned char connectedText[] PROGMEM ={"Connected! "};
-unsigned char btcPriceText[100] ={""};
+unsigned char errorParsing[] PROGMEM ={"Error parsing JSON object."};
+unsigned char tickerText[100] ={""};
 
 MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, CS_PIN, NUM_PANELS);
 CRGB leds[NUM_LEDS];
 LedControl lc = LedControl(D7, D5, D4, NUM_PANELS);
+DynamicJsonBuffer jsonBuffer;
 
 void loop() {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
     HTTPClient http;  //Declare an object of class HTTPClient
-    http.begin("http://btcprice-lyons.herokuapp.com/btcprice");  //Specify request destination
+    http.begin("http://btcprice-lyons.herokuapp.com/ticker");  //Specify request destination
     int httpCode = http.GET(); //Send the request
 
     if (httpCode > 0) { //Check the returning code
-      String price = http.getString();   //Get the request response payload
-      String price_isolated = price.substring(9);
-      price_isolated.replace(",", "");
-      double price_double = price_isolated.toDouble();
+      String responseString = http.getString();   //Get the request response payload
+      JsonArray& root = jsonBuffer.parseArray(responseString);
 
-      for(int i = 0; i <= price.length(); i++) {
-        btcPriceText[i] = price[i];
+      // Test if parsing succeeds.
+      if (!root.success()) {
+        scrollMessage(errorParsing);
+        return;
       }
 
-      scrollMessage(emptySpace);
-      scrollMessage(btcPriceText);
-      
+      //Just hardcode instead of looping for now.
+      String btcPrice = root[0]["level"];
+      String sp500level = root[1]["level"];
+      String sp500valueChange = root[1]["value_change"];
+      String sp500percentChange = root[1]["percent_change"];
+      String sp500color = root[1]["color"];
+      String nasdaqLevel = root[2]["level"];
+      String nasdaqValueChange = root[2]["value_change"];
+      String nasdaqPercentChange = root[2]["percent_change"];
+      String nasdaqColor = root[2]["color"];
+      String dowLevel = root[3]["level"];
+      String dowValueChange = root[3]["value_change"];
+      String dowPercentChange = root[3]["percent_change"];
+      String dowColor = root[3]["color"];
 
-      if(price_double > curr_price) {   
+      //S&P500 data parsing
+      String sp500readout = "S&P 500 FUTURES  " + sp500level + "  (" + sp500valueChange + " / " + sp500percentChange + ")";
+      clearBuffer();
+      for(int i = 0; i < sp500readout.length(); i++) {
+        tickerText[i] = sp500readout[i];
+      }
+      scrollMessage(emptySpace);
+      scrollMessage(tickerText);
+
+      if(sp500color == "red") {
+        setRed();
+      } else {
         setGreen();
-      } else if (price_double < curr_price) {
+      }
+
+      //Nasdaq data parsing
+      String nasdaqReadout = "NASDAQ FUTURES  " + nasdaqLevel + "  (" + nasdaqValueChange + " / " + nasdaqPercentChange + ")";
+      clearBuffer();
+      for(int i = 0; i < nasdaqReadout.length(); i++) {
+        tickerText[i] = nasdaqReadout[i];
+      }
+      
+      scrollMessage(emptySpace);
+      scrollMessage(tickerText);
+
+      if(nasdaqColor == "red") {
+        setRed();
+      } else {
+        setGreen();
+      }
+
+      //Dow data parsing
+      String dowReadout = "DJI FUTURES  " + dowLevel + "  (" + dowValueChange + " / " + dowPercentChange + ")";
+      clearBuffer();
+      for(int i = 0; i < dowReadout.length(); i++) {
+        tickerText[i] = dowReadout[i];
+      }
+      
+      scrollMessage(emptySpace);
+      scrollMessage(tickerText);
+
+      if(dowColor == "red") {
+        setRed();
+      } else {
+        setGreen();
+      }
+
+      //BTC/USD data parsing
+      String btcPriceIsolated = btcPrice;
+      btcPriceIsolated.replace(",", "");
+      double btcPriceDouble = btcPriceIsolated.toDouble();
+      String btcPriceReadout = "BTC/USD  $" + btcPrice;
+
+      clearBuffer();
+      for(int i = 0; i < btcPriceReadout.length(); i++) {
+        tickerText[i] = btcPriceReadout[i];
+      }
+      
+      scrollMessage(emptySpace);
+      scrollMessage(tickerText);
+
+      //BTC price color change will just refer to changes from last read
+      if(btcPriceDouble > curr_price) {   
+        setGreen();
+      } else if (btcPriceDouble < curr_price) {
         setRed();
       }
 
-      curr_price = price_double;
+      curr_price = btcPriceDouble;
     }
  
     http.end();   //Close connection
   }
  
+}
+
+void clearBuffer() {
+  for(int i = 0; i < 100; i++) {
+    tickerText[i] = (char) 0;
+  }
 }
 
 void setup () {
@@ -75,7 +157,7 @@ void setup () {
     lc.setIntensity(x,8);       // Set the brightness to default value
     lc.clearDisplay(x);         // and clear the display
   }
-  
+
   FastLED.addLeds<NEOPIXEL, LED_DATA>(leds, NUM_LEDS);
   scrollMessage(connectText);
   WiFi.begin(ssid, password);
@@ -100,7 +182,7 @@ void setup () {
   scrollMessage(connectedText);
   delay(3000);
   
-  SCROLL_SPEED = 19;
+  SCROLL_SPEED = 25;
 
 }
 
