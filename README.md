@@ -24,6 +24,8 @@ Here's how I have everything set up inside the enclosure... Doesn't tell you muc
 
 I built a simple API in Node.js that returns a JSON array which the ESP8266 can parse source-by-source. The device handle corresponding LED color changes as it scrolls through the sources and all of this data comes from the API. The API uses a Node package called [btc-stats](https://www.npmjs.com/package/btc-stats) to automatically get average BTC trading prices across different exchanges.
 
+The API is easy to host on Heroku for quick setup. Unfortunately, I had to rely on web scraping to get the data I was looking for, but I tried to be respectful of the underlying websites to not send too many requests too frequently.
+
 ## Build
 
 The main portion of the project enclosure is constructed out of pine wood. The LED display cover is made out of white translucent acrylic sheets. Everything was sanded down with a rotary sander to ensure all edges/corners met up and to give the project a polished look. 
