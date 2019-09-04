@@ -31,5 +31,6 @@ The main portion of the project enclosure is constructed out of pine wood. The L
 The LED strip panel sits on a level above the ESP8266, the MAX7219 panels, and all of the wiring. This is to eliminate any obstructions above the LEDs that would result in large shadows on the acrylic cover. I wanted to cover as much of this surface with LED strips as I could to make it as bright as possible, and I really learned a thing or two about soldering together LED strips. You can check out the video linked below to see how I did this. The video also shows the LED panel for this project at the end.
 
 [How to Cut, Solder, and Connect LED Strips](https://www.youtube.com/watch?v=PkWv06by0pU)
+
 [![How to Cut, Solder, and Connect LED Strips](https://img.youtube.com/vi/PkWv06by0pU/0.jpg)](https://www.youtube.com/watch?v=PkWv06by0pU)
 
