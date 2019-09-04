@@ -1,6 +1,6 @@
 # ESP8266-Ticker
 
-This project uses a simple ESP8266 WiFi microchip to poll financial data in real time -- displaying prices on a MAX7219 LED matrix reminiscent of a digital stock ticker. Additionally, there is a WS2812B LED strip inside the project enclosure that illuminates a translucent acrylic cap. 
+This project uses a simple [ESP8266](https://www.amazon.com/gp/product/B07HF44GBT/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07HF44GBT&linkCode=as2&tag=knolllabs-20&linkId=a104e9eb626f87ce959f62b9588b0188) WiFi microchip to poll financial data in real time -- displaying prices on a [MAX7219](https://www.amazon.com/gp/product/B07FFV537V/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07FFV537V&linkCode=as2&tag=knolllabs-20&linkId=72251d43862b6028423df0c48ee863ce) LED matrix reminiscent of a digital stock ticker. Additionally, there is a [WS2812B](https://www.amazon.com/gp/product/B01LSF4Q0A/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01LSF4Q0A&linkCode=as2&tag=knolllabs-20&linkId=e0b6ec8191b828b6f4735bc985695e54) LED strip inside the project enclosure that illuminates a translucent acrylic cap. 
 
 ![](demo.gif)
 
