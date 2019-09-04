@@ -20,15 +20,16 @@ Here's how I have everything set up inside the enclosure... Doesn't tell you muc
 
 ![](circuit_board.jpg)
 
-##Restful API
+## Restful API
 
 I built a simple API in Node.js that returns a JSON array which the ESP8266 can parse source-by-source. The device handle corresponding LED color changes as it scrolls through the sources and all of this data comes from the API. The API uses a Node package called [btc-stats](https://www.npmjs.com/package/btc-stats) to automatically get average BTC trading prices across different exchanges.
 
-##Build
+## Build
 
 The main portion of the project enclosure is constructed out of pine wood. The LED display cover is made out of white translucent acrylic sheets. Everything was sanded down with a rotary sander to ensure all edges/corners met up and to give the project a polished look. 
 
 The LED strip panel sits on a level above the ESP8266, the MAX7219 panels, and all of the wiring. This is to eliminate any obstructions above the LEDs that would result in large shadows on the acrylic cover. I wanted to cover as much of this surface with LED strips as I could to make it as bright as possible, and I really learned a thing or two about soldering together LED strips. You can check out the video linked below to see how I did this. The video also shows the LED panel for this project at the end.
 
+[How to Cut, Solder, and Connect LED Strips](https://www.youtube.com/watch?v=PkWv06by0pU)
 [![How to Cut, Solder, and Connect LED Strips](https://img.youtube.com/vi/PkWv06by0pU/0.jpg)](https://www.youtube.com/watch?v=PkWv06by0pU)
 
