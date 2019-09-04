@@ -34,3 +34,5 @@ The LED strip panel sits on a level above the ESP8266, the MAX7219 panels, and a
 
 [![How to Cut, Solder, and Connect LED Strips](https://img.youtube.com/vi/PkWv06by0pU/0.jpg)](https://www.youtube.com/watch?v=PkWv06by0pU)
 
+Blog post: [http://knolllabs.com/esp8266-ticker-real-time-scrolling-financial-data-on-a-max7219-led-matrix/](http://knolllabs.com/esp8266-ticker-real-time-scrolling-financial-data-on-a-max7219-led-matrix/)
+
